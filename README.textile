@@ -1,0 +1,29 @@
+This is a Scala Implementation of the Circuit Breaker state machine mentioned in the book "Release It":http://www.michaelnygard.com/
+
+I used the GoF State Machine pattern (like "Ken DeLong":http://www.jroller.com/kenwdelong/entry/circuit_breaker_in_java), implemented it in Scala and added some factory stuff.
+
+Use it like this
+
+<pre>
+. . .
+addCircuitBreaker("test", CircuitBreakerConfiguration(100,10))
+. . .
+
+class Test extends UsingCircuitBreaker {
+  def myMethodWorkingFine = {
+    withCircuitBreaker("test") {
+      . . . 
+    }
+  }
+
+  def myMethodDoingWrong = {
+    withCircuitBreaker("test") {
+      throw new java.lang.IllegalArgumentException
+    }
+  }
+}
+</pre>
+
+-  -  -  -
+Have a look at "FaKods BLOG":http://blog.fakod.eu
+Follow Me at "Twitter":http://twitter.com/fakod
