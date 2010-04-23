@@ -24,6 +24,4 @@ class Test extends UsingCircuitBreaker {
 }
 </pre>
 
--  -  -  -
-Have a look at "FaKods BLOG":http://blog.fakod.eu
-Follow Me at "Twitter":http://twitter.com/fakod
+I will add maven pom and addional test specs (see src/TestCircuitBreaker.scala) later.
