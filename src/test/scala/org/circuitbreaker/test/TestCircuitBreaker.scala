@@ -1,5 +1,7 @@
+package org.circuitbreaker.test
+
 import org.circuitbreaker._
-import org.specs.Specification
+import org.specs.{SpecificationWithJUnit}
 
 /**
  * User: FaKod
@@ -8,7 +10,7 @@ import org.specs.Specification
  */
 
 
-class Test extends UsingCircuitBreaker {
+class MyClass extends UsingCircuitBreaker {
 
   def myMethod = {
     withCircuitBreaker("test") {
@@ -24,7 +26,7 @@ class Test extends UsingCircuitBreaker {
 }
 
 import CircuitBreaker._
-object TestCircuitBreaker extends Specification {
+class TestCircuitBreaker extends SpecificationWithJUnit {
 
   "A CircuitBreaker" should {
     setSequential()
@@ -35,28 +37,28 @@ object TestCircuitBreaker extends Specification {
 
     "remain closed" in {
       for(i <- 1 to 20) {
-        new Test().myMethod
+        new MyClass().myMethod
       }
     }
 
     "be half open" in {
       for(i <- 1 to 10) {
         println("1: " + i)
-        (new Test().my2Method) must throwA[java.lang.IllegalArgumentException]
+        (new MyClass().my2Method) must throwA[java.lang.IllegalArgumentException]
       }
 
       for(i <- 1 to 10) {
         println("2: " + i)
-        (new Test().my2Method) must throwA[CircuitBreakerOpenException]
+        (new MyClass().my2Method) must throwA[CircuitBreakerOpenException]
       }
 
       Thread.sleep(200)
 
-      (new Test().my2Method) must throwA[CircuitBreakerHalfOpenException]
+      (new MyClass().my2Method) must throwA[CircuitBreakerHalfOpenException]
 
       for(i <- 1 to 10) {
         println("3: " + i)
-        (new Test().my2Method) must throwA[CircuitBreakerOpenException]
+        (new MyClass().my2Method) must throwA[CircuitBreakerOpenException]
       }
     }
 
