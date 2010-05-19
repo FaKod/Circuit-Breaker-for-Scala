@@ -38,7 +38,7 @@ class MyClass extends UsingCircuitBreaker {
    * method throws a IllegalArgumentException
    * means: Calls are failing
    */
-  def my2Method:Long = {
+  def my2Method: Long = {
     withCircuitBreaker("test") {
       throw new java.lang.IllegalArgumentException
     }
@@ -51,8 +51,8 @@ class MyClass extends UsingCircuitBreaker {
  * the TEST
  */
 import CircuitBreaker._
-class TestCircuitBreaker extends SpecificationWithJUnit {
 
+class TestCircuitBreaker extends SpecificationWithJUnit {
   "A CircuitBreaker" should {
     setSequential()
     shareVariables()
@@ -60,21 +60,21 @@ class TestCircuitBreaker extends SpecificationWithJUnit {
     /**
      * configure two CircuitBreaker
      */
-    addCircuitBreaker("test", CircuitBreakerConfiguration(100,10))
-    addCircuitBreaker("test2", CircuitBreakerConfiguration(100,10))
+    addCircuitBreaker("test", CircuitBreakerConfiguration(100, 10))
+    addCircuitBreaker("test2", CircuitBreakerConfiguration(100, 10))
 
     "remain closed (no exceptions are thrown)" in {
-      for(i <- 1 to 20) {
+      for (i <- 1 to 20) {
         new MyClass().myMethod must not(throwA[CircuitBreakerOpenException])
       }
     }
 
     "be changing states correctly" in {
-      
+
       /**
        * 10 failures throwing IllegalArgumentException
        */
-      for(i <- 1 to 10) {
+      for (i <- 1 to 10) {
         println("1: " + i)
         (new MyClass().my2Method) must throwA[java.lang.IllegalArgumentException]
       }
@@ -84,7 +84,7 @@ class TestCircuitBreaker extends SpecificationWithJUnit {
        * calls are failing fast (invoke is not called) for
        * 100ms (this is configured for CircuitBreaker "test")
        */
-      for(i <- 1 to 10) {
+      for (i <- 1 to 10) {
         println("2: " + i)
         (new MyClass().my2Method) must throwA[CircuitBreakerOpenException]
       }
@@ -104,7 +104,7 @@ class TestCircuitBreaker extends SpecificationWithJUnit {
       /**
        * still failing? then CircuitBreaker should be open again
        */
-      for(i <- 1 to 10) {
+      for (i <- 1 to 10) {
         println("3: " + i)
         (new MyClass().my2Method) must throwA[CircuitBreakerOpenException]
       }

@@ -34,7 +34,7 @@ class CircuitBreakerOpenException(message: String, cause: Throwable = null) exte
 /**
  * CircuitBreaker is half open exception
  * Calls are still failing
- * 
+ *
  * @author Christopher Schmidt
  */
 class CircuitBreakerHalfOpenException(message: String, cause: Throwable = null) extends CircuitBreakerException(message, cause)
